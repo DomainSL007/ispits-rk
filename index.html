@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>This DOMAIN is For SALE!</title>
+<title>ISPITS-RK.MA — FOR SALE!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #C1121F;
-    --gold: #D4A017;
-    --bg: #0A0A0A;
-    --surface: #111111;
-    --border: #222;
-    --text: #F0EDE8;
-    --muted: #7A7572;
+    --green:   #9FEF00;       /* HTB primary green */
+    --green2:  #7EC800;       /* darker green for hover */
+    --bg:      #141D2B;       /* HTB dark navy bg */
+    --surface: #1A2332;       /* HTB card surface */
+    --surface2:#1E2A3A;       /* slightly lighter surface */
+    --border:  #2B3A4E;       /* HTB border color */
+    --text:    #A4B1CD;       /* HTB body text */
+    --bright:  #FFFFFF;       /* white headings */
+    --muted:   #4A5568;       /* dimmed text */
+    --accent:  #FF6B35;       /* orange accent (secondary) */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
@@ -31,18 +34,61 @@
     overflow-x: hidden;
   }
 
-  /* Background texture */
+  body[dir="rtl"] { font-family: 'Segoe UI', Tahoma, sans-serif; }
+
+  /* HTB-style grid/scan background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
+    background-image:
+      linear-gradient(rgba(159,239,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(159,239,0,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(193,18,31,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 90%, rgba(212,160,23,0.05) 0%, transparent 60%);
+      radial-gradient(ellipse 70% 50% at 15% 5%,  rgba(159,239,0,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 70% at 85% 95%, rgba(255,107,53,0.05) 0%, transparent 55%);
     pointer-events: none;
     z-index: 0;
   }
 
+  /* ── Lang switcher (top bar) ── */
+  .lang-bar {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 100;
+    display: flex;
+    gap: 6px;
+  }
+  body[dir="rtl"] .lang-bar { right: auto; left: 14px; }
+  .lang-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'Share Tech Mono', monospace;
+  }
+  .lang-pill:hover, .lang-pill.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(159,239,0,0.06);
+  }
+
+  /* ── Main layout ── */
   .wrapper {
     position: relative;
     z-index: 1;
@@ -50,46 +96,47 @@
     max-width: 600px;
   }
 
-  /* Top ornament */
   .ornament {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     animation: fadeDown 0.6s ease both;
   }
   .ornament-line {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 3px;
+    color: var(--green);
+    font-size: 10px;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    font-weight: 500;
+    font-family: 'Share Tech Mono', monospace;
+    opacity: 0.8;
   }
   .ornament-line::before,
   .ornament-line::after {
     content: '';
-    width: 48px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: 0.4;
   }
 
-  /* Badge */
   .badge {
     display: inline-block;
-    background: var(--red);
-    color: #fff;
+    background: transparent;
+    color: var(--green);
+    border: 1px solid var(--green);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 3px;
     text-transform: uppercase;
-    padding: 5px 14px;
+    padding: 4px 14px;
     border-radius: 2px;
     margin-bottom: 20px;
     animation: fadeDown 0.6s 0.1s ease both;
+    box-shadow: 0 0 12px rgba(159,239,0,0.15);
   }
 
-  /* Card */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -98,120 +145,133 @@
     text-align: center;
     animation: fadeUp 0.7s 0.2s ease both;
     position: relative;
+    box-shadow: 0 0 60px rgba(159,239,0,0.04), inset 0 1px 0 rgba(255,255,255,0.03);
   }
-
-  /* Corner accents */
+  /* HTB bracket corners */
   .card::before, .card::after {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 20px;
-    border-color: var(--gold);
+    width: 18px; height: 18px;
+    border-color: var(--green);
     border-style: solid;
-    opacity: 0.4;
+    opacity: 0.5;
   }
-  .card::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
-  .card::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+  .card::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .card::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
 
   h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 7vw, 3.4rem);
-    font-weight: 900;
-    letter-spacing: -0.5px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 2px;
     line-height: 1;
     margin-bottom: 20px;
-    color: var(--text);
+    color: var(--bright);
+    text-shadow: 0 0 30px rgba(159,239,0,0.2);
   }
-
-  .tld { color: var(--red); }
+  .tld { color: var(--green); }
 
   .divider {
-    width: 40px;
-    height: 2px;
-    background: var(--gold);
+    width: 40px; height: 1px;
+    background: var(--green);
     margin: 0 auto 20px;
-    opacity: 0.6;
+    opacity: 0.4;
+    box-shadow: 0 0 8px var(--green);
   }
 
   .desc {
-    color: var(--muted);
+    color: var(--text);
     font-size: 15px;
     line-height: 1.75;
     max-width: 420px;
     margin: 0 auto 28px;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .price-block {
     margin: 28px 0;
     padding: 20px;
-    border: 1px solid #2a2a2a;
+    border: 1px solid rgba(159,239,0,0.2);
     border-radius: 3px;
-    background: rgba(212,160,23,0.04);
+    background: rgba(159,239,0,0.03);
+    position: relative;
   }
   .price-label {
+    font-family: 'Share Tech Mono', monospace;
     font-size: 10px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .price {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    color: var(--gold);
-    font-weight: 700;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.9rem;
+    color: var(--green);
+    font-weight: 400;
+    text-shadow: 0 0 20px rgba(159,239,0,0.3);
   }
 
-  /* Form */
   .form { margin-top: 32px; text-align: left; }
-  .form-row { margin-bottom: 12px; }
+  body[dir="rtl"] .form { text-align: right; }
+
+  .form-row { margin-bottom: 14px; }
   .form-row label {
     display: block;
-    font-size: 11px;
-    letter-spacing: 1.5px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--green);
     margin-bottom: 6px;
-    font-weight: 500;
+    opacity: 0.8;
   }
   .form-row input,
   .form-row textarea {
     width: 100%;
-    padding: 12px 14px;
-    background: #0D0D0D;
+    padding: 11px 14px;
+    background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 3px;
-    color: var(--text);
+    color: var(--bright);
     font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
-    transition: border-color 0.2s;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
+    direction: inherit;
   }
   .form-row input:focus,
-  .form-row textarea:focus { border-color: var(--red); }
+  .form-row textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px rgba(159,239,0,0.08);
+  }
   .form-row textarea { resize: vertical; min-height: 80px; }
 
   .btn {
     width: 100%;
-    padding: 14px;
-    background: var(--red);
-    color: #fff;
+    padding: 13px;
+    background: var(--green);
+    color: #141D2B;
     border: none;
     border-radius: 3px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 2px;
     text-transform: uppercase;
     cursor: pointer;
     margin-top: 8px;
-    transition: background 0.2s, transform 0.15s;
+    transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+    box-shadow: 0 0 20px rgba(159,239,0,0.2);
   }
-  .btn:hover { background: #9d0e18; transform: translateY(-1px); }
+  .btn:hover {
+    background: var(--green2);
+    box-shadow: 0 0 30px rgba(159,239,0,0.35);
+    transform: translateY(-1px);
+  }
   .btn:active { transform: translateY(0); }
 
-  /* Contact footer */
   .contact {
     margin-top: 28px;
     padding-top: 24px;
@@ -225,28 +285,42 @@
     color: var(--muted);
     text-decoration: none;
     font-size: 13px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 7px;
     transition: color 0.2s;
+    letter-spacing: 0.5px;
   }
-  .contact a:hover { color: var(--text); }
-  .contact-icon { font-size: 16px; }
+  .contact a:hover { color: var(--green); }
 
-  /* Success message */
+  .wa-icon {
+    width: 18px; height: 18px;
+    fill: #25D366;
+    flex-shrink: 0;
+  }
+  .mail-icon { font-size: 16px; }
+
   .success {
     display: none;
     text-align: center;
     padding: 24px;
-    color: #4caf6e;
-    font-size: 15px;
+    color: var(--green);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 1px;
   }
 
-  /* Animations */
+  /* Scanline flicker on h1 — subtle HTB feel */
+  @keyframes flicker {
+    0%,100% { opacity:1; } 92% { opacity:1; } 93% { opacity:0.85; } 94% { opacity:1; }
+  }
+  h1 { animation: flicker 6s infinite; }
+
   @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeUp   { from { opacity:0; transform:translateY(16px);  } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
 
-  /* Mobile */
   @media (max-width: 520px) {
     .card { padding: 36px 24px; }
     .contact { gap: 16px; }
@@ -254,60 +328,74 @@
 </style>
 </head>
 <body>
+
+<!-- ── Language Switcher Bar ── -->
+<div class="lang-bar">
+  <button class="lang-pill active" id="pill-en" onclick="setLang('en')">EN</button>
+  <button class="lang-pill" id="pill-fr" onclick="setLang('fr')">FR</button>
+  <button class="lang-pill" id="pill-ar" onclick="setLang('ar')">AR</button>
+  <button class="lang-pill" id="pill-es" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- ── Main Content ── -->
 <div class="wrapper">
 
   <div class="ornament">
-    <span class="ornament-line">Premium Domain</span>
+    <span class="ornament-line" data-i18n="tagline"></span>
   </div>
 
   <div class="card">
-    <div class="badge">For Sale</div>
+    <div class="badge" data-i18n="badge"></div>
 
-    <h1>ispits-rk<span class="tld">.ma</span></h1>
+    <h1>ISPITS-RK<span class="tld">.MA</span></h1>
     <div class="divider"></div>
 
-    <p class="desc">
-      A short, brandable .ma domain — ideal for [your niche, e.g. e-commerce, fintech, travel...] 
-      targeting the Moroccan market. Direct type-in traffic included.
-    </p>
+    <p class="desc" data-i18n="desc"></p>
 
-   <!-- <div class="price-block">
-      <div class="price-label">Asking Price</div>
+    <div class="price-block">
+      <div class="price-label" data-i18n="priceLabel"></div>
       <div class="price">MAD XX,XXX &nbsp;/&nbsp; €X,XXX</div>
-    </div>-->
+    </div>
 
-    <!-- Replace action URL with your Formspree endpoint -->
     <form class="form" id="offerForm"
-          action="https://formspree.io/f/xkoaoyyv"
+          action="https://formspree.io/f/YOUR_FORM_ID"
           method="POST">
 
       <div class="form-row">
-        <label>Your Name</label>
-        <input type="text" name="name" placeholder="Ahmed Benali" required>
+        <label data-i18n="fieldName"></label>
+        <input type="text" name="name" data-i18n-placeholder="phName" required>
       </div>
       <div class="form-row">
-        <label>Email Address</label>
-        <input type="email" name="email" placeholder="ahmed@company.ma" required>
+        <label data-i18n="fieldEmail"></label>
+        <input type="email" name="email" data-i18n-placeholder="phEmail" required>
       </div>
       <div class="form-row">
-        <label>Your Offer (optional)</label>
-        <input type="text" name="offer" placeholder="e.g. MAD 8,000">
+        <label data-i18n="fieldPhone"></label>
+        <input type="tel" name="phone" data-i18n-placeholder="phPhone" required>
       </div>
       <div class="form-row">
-        <label>Message (optional)</label>
-        <textarea name="message" placeholder="Tell us about your project..."></textarea>
+        <label data-i18n="fieldOffer"></label>
+        <input type="text" name="offer" data-i18n-placeholder="phOffer">
+      </div>
+      <div class="form-row">
+        <label data-i18n="fieldMsg"></label>
+        <textarea name="message" data-i18n-placeholder="phMsg"></textarea>
       </div>
 
-      <button type="submit" class="btn">Submit Offer →</button>
-      <div class="success" id="successMsg">✓ Your offer has been received. We'll be in touch shortly.</div>
+      <button type="submit" class="btn" data-i18n="submitBtn"></button>
+      <div class="success" id="successMsg" data-i18n="successMsg"></div>
     </form>
 
     <div class="contact">
       <a href="mailto:adam1freesoul@icloud.com">
-        <span class="contact-icon">✉</span> adam1freesoul@icloud.com
+        <span class="mail-icon">✉</span> ADAM1FREESOUL@ICLOUD.COM
       </a>
       <a href="https://wa.me/212635105029" target="_blank">
-        <span class="contact-icon">📱</span> WhatsApp
+        <!-- WhatsApp SVG icon -->
+        <svg class="wa-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.473 2.027 7.774L0 32l8.467-2.001A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.758-1.845l-.484-.287-5.025 1.187 1.21-4.898-.316-.503A13.237 13.237 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.846c-.398-.199-2.354-1.162-2.719-1.295-.365-.133-.631-.199-.897.199-.266.398-1.03 1.295-1.263 1.561-.232.266-.465.299-.863.1-.398-.199-1.681-.619-3.203-1.977-1.184-1.056-1.983-2.361-2.215-2.759-.232-.398-.025-.613.174-.811.179-.178.398-.465.598-.698.199-.232.266-.398.398-.664.133-.266.066-.498-.033-.697-.1-.199-.897-2.161-1.23-2.96-.324-.776-.653-.671-.897-.683l-.764-.013c-.266 0-.697.1-.1063.498-.365.398-1.395 1.362-1.395 3.323s1.428 3.854 1.627 4.12c.199.266 2.808 4.286 6.803 5.998.951.41 1.693.655 2.271.839.954.304 1.823.261 2.51.158.766-.114 2.354-.962 2.687-1.893.333-.93.333-1.727.232-1.893-.099-.166-.365-.265-.763-.464z"/>
+        </svg>
+        WhatsApp
       </a>
     </div>
   </div>
@@ -315,35 +403,162 @@
 </div>
 
 <script>
-  // Smooth form submission with Formspree
-  const form = document.getElementById('offerForm');
-  const success = document.getElementById('successMsg');
+const i18n = {
+  en: {
+    tagline:   "Contact Us — Buy This Domain Today",
+    badge:     "For Sale",
+    desc:      "We sell domains with fast response and outstanding service — open to businesses of all sizes and types. Same-day transfer guaranteed. We're open to negotiations.",
+    priceLabel:"Asking Price",
+    fieldName: "Your Name",
+    fieldEmail:"Email Address",
+    fieldPhone:"Phone Number",
+    fieldOffer:"Your Offer (optional)",
+    fieldMsg:  "Message (optional)",
+    phName:    "Ahmed Benali",
+    phEmail:   "ahmed@company.ma",
+    phPhone:   "+212 6XX XXX XXX",
+    phOffer:   "e.g. USD 8,000",
+    phMsg:     "Tell us about your project...",
+    submitBtn: "Submit Offer →",
+    successMsg:"✓ Your offer has been received. We'll be in touch shortly.",
+    dir:       "ltr"
+  },
+  fr: {
+    tagline:   "Contactez-nous — Achetez ce domaine aujourd'hui",
+    badge:     "À Vendre",
+    desc:      "Nous vendons des domaines avec une réponse rapide et un service exceptionnel — ouverts aux entreprises de toutes tailles. Transfert le jour même garanti. Nous sommes ouverts à la négociation.",
+    priceLabel:"Prix demandé",
+    fieldName: "Votre nom",
+    fieldEmail:"Adresse e-mail",
+    fieldPhone:"Numéro de téléphone",
+    fieldOffer:"Votre offre (optionnel)",
+    fieldMsg:  "Message (optionnel)",
+    phName:    "Ahmed Benali",
+    phEmail:   "ahmed@entreprise.ma",
+    phPhone:   "+212 6XX XXX XXX",
+    phOffer:   "ex. EUR 8 000",
+    phMsg:     "Parlez-nous de votre projet...",
+    submitBtn: "Soumettre une offre →",
+    successMsg:"✓ Votre offre a été reçue. Nous vous contacterons bientôt.",
+    dir:       "ltr"
+  },
+  ar: {
+    tagline:   "تواصل معنا — اشترِ هذا النطاق اليوم",
+    badge:     "للبيع",
+    desc:      "نبيع النطاقات باستجابة سريعة وخدمة متميزة — مفتوحون للشركات من جميع الأحجام والأنواع. نضمن نقل الملكية في نفس اليوم. ونرحب بالتفاوض.",
+    priceLabel:"السعر المطلوب",
+    fieldName: "الاسم الكامل",
+    fieldEmail:"البريد الإلكتروني",
+    fieldPhone:"رقم الهاتف",
+    fieldOffer:"عرضك (اختياري)",
+    fieldMsg:  "رسالة (اختياري)",
+    phName:    "أحمد بنعلي",
+    phEmail:   "ahmed@company.ma",
+    phPhone:   "212 6XX XXX XXX+",
+    phOffer:   "مثال: 8,000 درهم",
+    phMsg:     "أخبرنا عن مشروعك...",
+    submitBtn: "إرسال العرض ←",
+    successMsg:"✓ تم استلام عرضك. سنتواصل معك قريباً.",
+    dir:       "rtl"
+  },
+  es: {
+    tagline:   "Contáctenos — Compre este dominio hoy",
+    badge:     "En Venta",
+    desc:      "Vendemos dominios con respuesta rápida y un servicio excelente — abiertos a empresas de todos los tamaños y tipos. Transferencia el mismo día garantizada. Estamos abiertos a negociar.",
+    priceLabel:"Precio pedido",
+    fieldName: "Su nombre",
+    fieldEmail:"Correo electrónico",
+    fieldPhone:"Número de teléfono",
+    fieldOffer:"Su oferta (opcional)",
+    fieldMsg:  "Mensaje (opcional)",
+    phName:    "Ahmed Benali",
+    phEmail:   "ahmed@empresa.ma",
+    phPhone:   "+212 6XX XXX XXX",
+    phOffer:   "ej. EUR 8.000",
+    phMsg:     "Cuéntenos sobre su proyecto...",
+    submitBtn: "Enviar oferta →",
+    successMsg:"✓ Su oferta ha sido recibida. Nos pondremos en contacto pronto.",
+    dir:       "ltr"
+  }
+};
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('.btn');
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
+function setLang(code) {
+  const t = i18n[code];
+  const html = document.documentElement;
 
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        form.reset();
-        success.style.display = 'block';
-        btn.style.display = 'none';
-      } else {
-        btn.textContent = 'Try again';
-        btn.disabled = false;
-      }
-    } catch {
-      btn.textContent = 'Try again';
+  // Direction & lang attr
+  html.lang = code;
+  html.dir  = t.dir;
+  document.body.dir = t.dir;
+
+  // Translate all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // Translate placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+
+  // Update active pill
+  document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
+  const pill = document.getElementById('pill-' + code);
+  if (pill) pill.classList.add('active');
+
+  localStorage.setItem('preferredLang', code);
+}
+
+function detectLang() {
+  // 1. Respect a previously saved manual choice
+  const saved = localStorage.getItem('preferredLang');
+  if (saved && i18n[saved]) return saved;
+
+  // 2. Walk browser language preferences and pick the first match
+  const langs = navigator.languages || [navigator.language || 'en'];
+  for (const l of langs) {
+    const code = l.split('-')[0].toLowerCase(); // e.g. "fr-FR" → "fr"
+    if (i18n[code]) return code;
+  }
+
+  // 3. Default to English
+  return 'en';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  setLang(detectLang());
+});
+
+// Form submission
+const form = document.getElementById('offerForm');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('.btn');
+  const origText = btn.textContent;
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.reset();
+      document.getElementById('successMsg').style.display = 'block';
+      btn.style.display = 'none';
+    } else {
+      btn.textContent = origText;
       btn.disabled = false;
     }
-  });
+  } catch {
+    btn.textContent = origText;
+    btn.disabled = false;
+  }
+});
 </script>
 </body>
 </html>
