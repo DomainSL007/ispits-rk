@@ -8,30 +8,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green:   #9FEF00;       /* HTB primary green */
-    --green2:  #7EC800;       /* darker green for hover */
-    --bg:      #141D2B;       /* HTB dark navy bg */
-    --surface: #1A2332;       /* HTB card surface */
-    --surface2:#1E2A3A;       /* slightly lighter surface */
-    --border:  #2B3A4E;       /* HTB border color */
-    --text:    #A4B1CD;       /* HTB body text */
-    --bright:  #FFFFFF;       /* white headings */
-    --muted:   #4A5568;       /* dimmed text */
-    --accent:  #FF6B35;       /* orange accent (secondary) */
+    --green:   #9FEF00;
+    --green2:  #7EC800;
+    --bg:      #141D2B;
+    --surface: #1A2332;
+    --surface2:#1E2A3A;
+    --border:  #2B3A4E;
+    --text:    #A4B1CD;
+    --bright:  #FFFFFF;
+    --muted:   #4A5568;
+    --accent:  #FF6B35;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%; /* prevent iOS font inflation */
+  }
 
   body {
     font-family: 'Rajdhani', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    min-height: 100dvh; /* dynamic viewport on mobile browsers */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 72px 16px 24px; /* top padding clears fixed lang-bar */
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent; /* remove tap flash on iOS */
   }
 
   body[dir="rtl"] { font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -62,13 +69,16 @@
   /* ── Lang switcher (top bar) ── */
   .lang-bar {
     position: fixed;
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     z-index: 100;
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
+    max-width: calc(100vw - 24px);
   }
-  body[dir="rtl"] .lang-bar { right: auto; left: 14px; }
+  body[dir="rtl"] .lang-bar { right: auto; left: 12px; }
+
   .lang-pill {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -76,11 +86,17 @@
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
-    padding: 5px 10px;
+    padding: 0;
+    width: 44px;         /* minimum touch target */
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 2px;
     cursor: pointer;
     transition: all 0.18s;
     font-family: 'Share Tech Mono', monospace;
+    touch-action: manipulation;
   }
   .lang-pill:hover, .lang-pill.active {
     border-color: var(--green);
@@ -98,24 +114,28 @@
 
   .ornament {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     animation: fadeDown 0.6s ease both;
+    padding: 0 8px;
   }
   .ornament-line {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     color: var(--green);
-    font-size: 10px;
-    letter-spacing: 4px;
+    font-size: 9px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     font-family: 'Share Tech Mono', monospace;
     opacity: 0.8;
+    text-align: center;
+    word-break: break-word;
   }
   .ornament-line::before,
   .ornament-line::after {
     content: '';
-    width: 40px; height: 1px;
+    width: 28px; height: 1px;
+    flex-shrink: 0;
     background: linear-gradient(90deg, transparent, var(--green), transparent);
     opacity: 0.4;
   }
@@ -132,7 +152,7 @@
     text-transform: uppercase;
     padding: 4px 14px;
     border-radius: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     animation: fadeDown 0.6s 0.1s ease both;
     box-shadow: 0 0 12px rgba(159,239,0,0.15);
   }
@@ -141,7 +161,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
-    padding: 52px 48px;
+    padding: 40px 32px;
     text-align: center;
     animation: fadeUp 0.7s 0.2s ease both;
     position: relative;
@@ -151,30 +171,31 @@
   .card::before, .card::after {
     content: '';
     position: absolute;
-    width: 18px; height: 18px;
+    width: 16px; height: 16px;
     border-color: var(--green);
     border-style: solid;
     opacity: 0.5;
   }
-  .card::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
-  .card::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+  .card::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+  .card::after  { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
 
   h1 {
     font-family: 'Share Tech Mono', monospace;
-    font-size: clamp(2rem, 7vw, 3rem);
+    font-size: clamp(1.7rem, 8vw, 3rem);
     font-weight: 400;
     letter-spacing: 2px;
-    line-height: 1;
-    margin-bottom: 20px;
+    line-height: 1.1;
+    margin-bottom: 18px;
     color: var(--bright);
     text-shadow: 0 0 30px rgba(159,239,0,0.2);
+    word-break: break-all; /* prevent overflow on tiny screens */
   }
   .tld { color: var(--green); }
 
   .divider {
     width: 40px; height: 1px;
     background: var(--green);
-    margin: 0 auto 20px;
+    margin: 0 auto 18px;
     opacity: 0.4;
     box-shadow: 0 0 8px var(--green);
   }
@@ -184,13 +205,13 @@
     font-size: 15px;
     line-height: 1.75;
     max-width: 420px;
-    margin: 0 auto 28px;
+    margin: 0 auto 24px;
     font-weight: 400;
   }
 
   .price-block {
-    margin: 28px 0;
-    padding: 20px;
+    margin: 24px 0;
+    padding: 18px 16px;
     border: 1px solid rgba(159,239,0,0.2);
     border-radius: 3px;
     background: rgba(159,239,0,0.03);
@@ -206,13 +227,14 @@
   }
   .price {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 1.9rem;
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
     color: var(--green);
     font-weight: 400;
     text-shadow: 0 0 20px rgba(159,239,0,0.3);
+    word-break: break-word;
   }
 
-  .form { margin-top: 32px; text-align: left; }
+  .form { margin-top: 28px; text-align: left; }
   body[dir="rtl"] .form { text-align: right; }
 
   .form-row { margin-bottom: 14px; }
@@ -229,28 +251,34 @@
   .form-row input,
   .form-row textarea {
     width: 100%;
-    padding: 11px 14px;
+    padding: 13px 14px;          /* taller for comfortable touch */
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 3px;
     color: var(--bright);
-    font-size: 14px;
+    font-size: 16px;             /* 16px prevents iOS auto-zoom */
     font-family: 'Rajdhani', sans-serif;
     font-weight: 500;
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
     direction: inherit;
+    -webkit-appearance: none;    /* remove iOS default styling */
+    appearance: none;
   }
   .form-row input:focus,
   .form-row textarea:focus {
     border-color: var(--green);
     box-shadow: 0 0 0 2px rgba(159,239,0,0.08);
   }
-  .form-row textarea { resize: vertical; min-height: 80px; }
+  .form-row textarea {
+    resize: vertical;
+    min-height: 88px;
+  }
 
   .btn {
     width: 100%;
-    padding: 13px;
+    padding: 15px 13px;          /* taller touch target */
+    min-height: 48px;
     background: var(--green);
     color: #141D2B;
     border: none;
@@ -264,22 +292,34 @@
     margin-top: 8px;
     transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
     box-shadow: 0 0 20px rgba(159,239,0,0.2);
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
   }
-  .btn:hover {
-    background: var(--green2);
-    box-shadow: 0 0 30px rgba(159,239,0,0.35);
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    /* hover effects only for devices that truly support hover (not touch) */
+    .btn:hover {
+      background: var(--green2);
+      box-shadow: 0 0 30px rgba(159,239,0,0.35);
+      transform: translateY(-1px);
+    }
+    .contact a:hover { color: var(--green); }
+    .lang-pill:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(159,239,0,0.06);
+    }
   }
-  .btn:active { transform: translateY(0); }
+  .btn:active { transform: translateY(0); background: var(--green2); }
 
   .contact {
     margin-top: 28px;
-    padding-top: 24px;
+    padding-top: 20px;
     border-top: 1px solid var(--border);
     display: flex;
-    justify-content: center;
-    gap: 28px;
-    flex-wrap: wrap;
+    flex-direction: column;      /* stack vertically by default for mobile */
+    align-items: center;
+    gap: 14px;
   }
   .contact a {
     color: var(--muted);
@@ -291,15 +331,17 @@
     gap: 7px;
     transition: color 0.2s;
     letter-spacing: 0.5px;
+    padding: 6px 0;              /* extra vertical tap area */
+    min-height: 44px;
+    touch-action: manipulation;
   }
-  .contact a:hover { color: var(--green); }
 
   .wa-icon {
-    width: 18px; height: 18px;
+    width: 20px; height: 20px;
     fill: #25D366;
     flex-shrink: 0;
   }
-  .mail-icon { font-size: 16px; }
+  .mail-icon { font-size: 18px; }
 
   .success {
     display: none;
@@ -321,9 +363,28 @@
   @keyframes fadeUp   { from { opacity:0; transform:translateY(16px);  } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
 
-  @media (max-width: 520px) {
-    .card { padding: 36px 24px; }
-    .contact { gap: 16px; }
+  /* ── Tablet & up: restore side-by-side contact links ── */
+  @media (min-width: 480px) {
+    body { padding: 80px 24px 32px; }
+    .card { padding: 52px 48px; }
+    .contact {
+      flex-direction: row;
+      justify-content: center;
+      gap: 28px;
+    }
+  }
+
+  /* ── Desktop: restore original generous padding ── */
+  @media (min-width: 700px) {
+    body { padding: 60px 24px; }
+  }
+
+  /* ── Very small phones (< 360px) ── */
+  @media (max-width: 359px) {
+    .card { padding: 28px 16px; }
+    .ornament-line::before,
+    .ornament-line::after { display: none; }
+    .lang-pill { width: 38px; height: 32px; font-size: 10px; }
   }
 </style>
 </head>
